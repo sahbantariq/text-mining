@@ -4,6 +4,7 @@ library(wordcloud)
 
 comments <- readRDS(file = "300_posts_comments")
 
+# Assigning numbers to posts and comments of each post
 mutated_comments <- comments %>% 
   tibble::as_tibble() %>% 
   dplyr::mutate(comments = iconv(.$comments, from = "UTF-8", to = "Latin1")) %>% 
@@ -13,8 +14,11 @@ mutated_comments <- comments %>%
   dplyr::select(comments, id, post_number, comment_number, created_time, type, 
                 likes_count, comments_count, shares_count) 
 
+
+# Tokenize the above dataframe with comment numbers and post numbers
 tidy_comments <- mutated_comments %>% 
   tidytext::unnest_tokens(word, comments)
+
 
 comment_sentiments <- function(lexicon, group_by = sentiment) {
   tidy_comments %>% 
@@ -34,7 +38,7 @@ comments_sentiments_nrc <- comment_sentiments("nrc")
 comments_sentiments_afinn <- tidy_comments %>% 
   dplyr::inner_join(tidytext::get_sentiments("afinn"), by = "word") %>% 
   dplyr::group_by(post_number) %>% 
-  dplyr::summarise(score = sum(score))
+  dplyr::summarise(score = sum(score)) 
 
 # Most common positive and negative words
 bing_word_counts <- tidy_comments %>% 
@@ -46,8 +50,8 @@ bing_word_counts <- tidy_comments %>%
 bing_word_counts %>% 
   dplyr::group_by(sentiment) %>% 
   dplyr::top_n(10) %>% 
-  ungroup() %>% 
-  mutate(word = reorder(word, n)) %>% 
+  dplyr::ungroup() %>% 
+  dplyr::mutate(word = reorder(word, n)) %>% 
   ggplot2::ggplot(ggplot2::aes(word, n, fill = sentiment)) +
   ggplot2::geom_col(show.legend = FALSE) +
   ggplot2::facet_wrap(~sentiment, scales = "free_y") +
@@ -98,8 +102,29 @@ en_word_sentence_comments <- en_word_comments %>%
   dplyr::mutate(sentence = iconv(sentence, to = 'latin1')) %>% 
   dplyr::ungroup()
 
+# Sentence as tokens with post number and comment number
 
-en_word_sentence_comments %>% 
+sentence_tokens <- en_word_sentence_comments %>% 
   dplyr::select(post_number, comment_number, sentence) %>%
   dplyr::ungroup() %>% 
   tidytext::unnest_tokens(sentences, sentence, token = "sentences")
+
+## Get the Negative Words to All Words Ratio or Positive Words to All Words Ratio
+# We can do it for trip advisor temporal data
+
+bingnegative <- get_sentiments("bing") %>% 
+  dplyr::filter(sentiment == "negative")
+
+wordcounts <- tidy_comments %>% 
+  dplyr::group_by(post_number) %>%
+  dplyr::summarize(word = n())
+
+tidy_comments %>%
+  dplyr::semi_join(bingnegative) %>%
+  dplyr::group_by(post_number) %>%
+  dplyr::summarize(negativewords = n()) %>%
+  dplyr::left_join(wordcounts, by = c("post_number")) %>%
+  dplyr::mutate(ratio = negativewords/word) %>%
+  dplyr::top_n(10) %>%
+  dplyr::ungroup() %>% 
+  dplyr::arrange(desc(ratio))

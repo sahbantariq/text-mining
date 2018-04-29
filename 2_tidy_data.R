@@ -2,8 +2,11 @@ library(tidytext)
 data(stop_words)
 
 # Custom stop words
-custom_stop_words <- data_frame(word = c("miss"), lexicon = c("custom")) %>% 
-  bind_rows(stop_words)
+custom_stop_words <- data.frame(word = c("miss", "flight", "tukish", 
+                                         "airlines", "flights", "airline",
+                                         "turkish"), 
+                                lexicon = c("custom")) %>%
+  rbind(stop_words)
 
 
 comments <- readRDS(file = "300_posts_comments")
@@ -20,7 +23,7 @@ tokens <- tibble::as_tibble(comments_vector) %>%
   tidytext::unnest_tokens(word, value)
 
 tokens_count <- tokens %>%
-  dplyr::anti_join(stop_words, by = "word") %>% 
+  dplyr::anti_join(custom_stop_words, by = "word") %>% 
   dplyr::count(word, sort = TRUE)
 
 saveRDS(tokens_count, "tokens_count_300")
