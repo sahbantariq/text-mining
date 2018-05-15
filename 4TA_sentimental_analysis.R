@@ -26,7 +26,7 @@ review_sentiments <- function(lexicon, group_by = sentiment) {
 }
 
 # Bing
-comment_sentiments_bing <- review_sentiments("bing")
+review_sentiments_bing <- review_sentiments("bing")
 
 # nrc
 review_sentiments_nrc <- comment_sentiments("nrc")

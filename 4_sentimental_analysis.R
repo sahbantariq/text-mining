@@ -11,7 +11,7 @@ mutated_comments <- comments %>%
   dplyr::mutate(post_number = as.numeric(factor(id))) %>% 
   dplyr::group_by(id) %>% 
   dplyr::mutate(comment_number = row_number()) %>% 
-  dplyr::select(comments, id, post_number, comment_number, created_time, type, 
+  dplyr::select(id, post_number, comment_number, comments, created_time, type, 
                 likes_count, comments_count, shares_count) 
 
 

@@ -52,5 +52,6 @@ for (i in seq(0, 20050, 10))
 # Save an object to a file
 saveRDS(df_total, file = "tripadvisor_emirates200500.rds")
 
-trip_turkishairlines <- readRDS(file = "tripadvisor_turkishairlines6846.rds")
+trip_turkishairlines <- readRDS(file = "tripadvisor_turkishairlines6846.rds") %>% View()
 trip_emirates <- readRDS(file = "tripadvisor_emirates20058.rds")
+

@@ -1,0 +1,1428 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={ThesisCode},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{ThesisCode}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{}
+  \preauthor{}\postauthor{}
+  \date{}
+  \predate{}\postdate{}
+
+
+\begin{document}
+\maketitle
+
+\subsection{Facebook Data Extraction}\label{facebook-data-extraction}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(Rfacebook)}
+
+\CommentTok{# Fb Authorization}
+\NormalTok{fb_oauth <-}\StringTok{ }\NormalTok{Rfacebook}\OperatorTok{::}\KeywordTok{fbOAuth}\NormalTok{(}
+  \DataTypeTok{app_id=}\StringTok{"1380496555352781"}\NormalTok{,}
+  \DataTypeTok{app_secret=}\StringTok{"eb3abc42d1e00536e6f4e37e58fc0b5d"}\NormalTok{,}
+  \DataTypeTok{extended_permissions =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{# Saving variable fb_oauth in a file and loading it}
+\KeywordTok{save}\NormalTok{(fb_oauth, }\DataTypeTok{file=}\StringTok{"fb_oauth"}\NormalTok{)}
+\KeywordTok{load}\NormalTok{(}\StringTok{"fb_oauth"}\NormalTok{)}
+
+\CommentTok{# Extract posts from turkish airlines page}
+\NormalTok{turkishairlines <-}\StringTok{ }\NormalTok{Rfacebook}\OperatorTok{::}\KeywordTok{getPage}\NormalTok{(}\DataTypeTok{page =} \StringTok{"turkishairlines"}\NormalTok{, }
+                                      \DataTypeTok{token =}\NormalTok{ fb_oauth, }\DataTypeTok{n =} \DecValTok{2000}\NormalTok{)}
+
+\CommentTok{# Save the posts in R data file}
+\KeywordTok{saveRDS}\NormalTok{(turkishairlines, }\StringTok{"turkishairlines_2000"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Read R data file and store in new variable}
+\NormalTok{data_turkishairlines <-}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\StringTok{"turkishairlines_2000"}\NormalTok{)}
+
+\CommentTok{# Storing the post ids in a new variable}
+\NormalTok{data_turkishairlines_id <-}\StringTok{ }\NormalTok{data_turkishairlines}\OperatorTok{$}\NormalTok{id}
+
+\CommentTok{# Viewing limited variables and rows}
+\NormalTok{data_turkishairlines }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(from_id, likes_count, type, comments_count, }
+\NormalTok{                shares_count, message) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 6
+##   from_id     likes_count type  comments_count shares_count message       
+##   <chr>             <dbl> <chr>          <dbl>        <dbl> <chr>         
+## 1 90430042759         254 photo             12           18 Our flights t~
+## 2 90430042759         300 photo            132           92 "We are looki~
+## 3 90430042759         869 photo             39           43 The most plea~
+## 4 90430042759         261 photo              9            7 Famous actor ~
+## 5 90430042759         227 photo             13           11 Within the sc~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data_turkishairlines }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(message) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 1
+##   message                                                                 
+##   <chr>                                                                   
+## 1 Our flights to Samarkand start on March 16th, 2018!                     
+## 2 "We are looking for new pilots! Join us at Turkish Airlines Pilot Roads~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Extracting comments and reactions from the extracted posts}
+\CommentTok{# The comments are extracted using post ids. Therefore, id variable}
+\CommentTok{# is used. }
+\NormalTok{all_posts <-}\StringTok{ }\NormalTok{data_turkishairlines_id[}\DecValTok{1}\OperatorTok{:}\DecValTok{300}\NormalTok{] }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{lapply}\NormalTok{(getPost, }\DataTypeTok{n =} \DecValTok{50000}\NormalTok{, }\DataTypeTok{token=}\NormalTok{fb_oauth, }
+         \DataTypeTok{comments =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{reactions =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{# Save first 300 posts comments in a R data file.}
+\KeywordTok{saveRDS}\NormalTok{(all_posts, }\StringTok{"300_posts"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Converting Facebook lists data into
+dataframe}\label{converting-facebook-lists-data-into-dataframe}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Reading the saved RDS file instead of applying getPost function repeatedly.}
+\CommentTok{# The resultant variable is a list which includes a post specific list.}
+\CommentTok{# Within each post specific list there are post comments and reactions.}
+\NormalTok{threehundred_posts <-}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\StringTok{"300_posts"}\NormalTok{) }
+
+\CommentTok{# Saving comments for first post in new variable}
+\NormalTok{full_comments <-}\StringTok{ }\NormalTok{threehundred_posts[[}\DecValTok{1}\NormalTok{]]}\OperatorTok{$}\NormalTok{comments}\OperatorTok{$}\NormalTok{message }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{as.data.frame}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{setNames}\NormalTok{(}\StringTok{"comments"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{id =}\NormalTok{ data_turkishairlines_id[}\DecValTok{1}\NormalTok{])}
+
+\CommentTok{# Expanding full_comments by adding comments of remaining posts. }
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{299}\NormalTok{) \{}
+\NormalTok{  comment <-}\StringTok{ }\NormalTok{threehundred_posts[[i}\OperatorTok{+}\DecValTok{1}\NormalTok{]]}\OperatorTok{$}\NormalTok{comments}\OperatorTok{$}\NormalTok{message }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{as.data.frame}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{setNames}\NormalTok{(}\StringTok{"comments"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{id =}\NormalTok{ data_turkishairlines_id[i}\OperatorTok{+}\DecValTok{1}\NormalTok{])}
+\NormalTok{  full_comments =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(full_comments, comment)}
+\NormalTok{\}}
+
+\CommentTok{# Assigning the post ids to its comments. }
+\CommentTok{# The posts ids are repeated when there are more than one comment.  }
+\NormalTok{full_comment_post <-}\StringTok{ }\NormalTok{full_comments }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{left_join}\NormalTok{(data_turkishairlines, }\DataTypeTok{by =} \StringTok{"id"}\NormalTok{)}
+
+\CommentTok{# Saving the comments of posts in R data file. }
+\KeywordTok{saveRDS}\NormalTok{(full_comment_post, }\StringTok{"300_posts_comments"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{readRDS}\NormalTok{(}\StringTok{"300_posts_comments"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{subset}\NormalTok{(}\DataTypeTok{select =} \KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{11}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 11
+##   from_id  comments id    from_name message created_time type  link  story
+##   <chr>    <fct>    <chr> <chr>     <chr>   <chr>        <chr> <chr> <chr>
+## 1 9043004~ Direct ~ 9043~ Turkish ~ Our fl~ 2017-10-05T~ photo http~ <NA> 
+## 2 9043004~ Just cu~ 9043~ Turkish ~ Our fl~ 2017-10-05T~ photo http~ <NA> 
+## 3 9043004~ What ab~ 9043~ Turkish ~ Our fl~ 2017-10-05T~ photo http~ <NA> 
+## 4 9043004~ What ab~ 9043~ Turkish ~ Our fl~ 2017-10-05T~ photo http~ <NA> 
+## 5 9043004~ Very in~ 9043~ Turkish ~ Our fl~ 2017-10-05T~ photo http~ <NA> 
+## # ... with 2 more variables: likes_count <dbl>, comments_count <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{readRDS}\NormalTok{(}\StringTok{"300_posts_comments"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(comments) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 1
+##   comments                                                                
+##   <fct>                                                                   
+## 1 Direct flight from Ireland to bodrum badly needed even twice a week in ~
+## 2 Just curious you do flights to Tbilisi?
+\end{verbatim}
+
+\subsection{Twitter Data Extraction}\label{twitter-data-extraction}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Load Requried Packages}
+\KeywordTok{library}\NormalTok{(}\StringTok{"SnowballC"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(}\StringTok{"tm"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(}\StringTok{"twitteR"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(}\StringTok{"syuzhet"}\NormalTok{)}
+
+\CommentTok{# Authonitical keys}
+\NormalTok{consumer_key <-}\StringTok{ 'tAyR9LyhATfD90aA7Ft1Zfj3I'}
+\NormalTok{consumer_secret <-}\StringTok{ 'vX1RHqHHDpnmNOqrGPMVnmnQjQvG98X3xlB7T7zv4hKcvj7tVv'}
+\NormalTok{access_token <-}\StringTok{ '2572842085-vExbB4HNvN57zmQhoQdbmutC16a4kdMdh1xVta5'}
+\NormalTok{access_secret <-}\StringTok{ 'HtTHSeAOz1WPcUX8nfW5ddwZ1TbXZGFB4pSHU0IZ3agvA'}
+
+\NormalTok{twitteR}\OperatorTok{::}\KeywordTok{setup_twitter_oauth}\NormalTok{(consumer_key, consumer_secret, }
+\NormalTok{                             access_token, access_secret)}
+
+\NormalTok{tweets <-}\StringTok{ }\KeywordTok{userTimeline}\NormalTok{(}\StringTok{"turkishairlines"}\NormalTok{, }\DataTypeTok{n=}\DecValTok{200}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Trip Advisor Data
+Extraction}\label{trip-advisor-data-extraction}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"rvest"}\NormalTok{)}
+
+\NormalTok{url <-}\StringTok{ "https://www.tripadvisor.com/Airline_Review-d8729174-Reviews-Turkish-Airlines"}
+\NormalTok{url <-}\StringTok{ "https://www.tripadvisor.com/Airline_Review-d8729174-Reviews-or20-Turkish-Airlines#REVIEWS"}
+
+\NormalTok{df_total =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{()}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20050}\NormalTok{, }\DecValTok{10}\NormalTok{))}
+\NormalTok{\{}
+  \ControlFlowTok{if}\NormalTok{ (i }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+\NormalTok{    url <-}\StringTok{ "https://www.tripadvisor.com/Airline_Review-d8729069-Reviews-Emirates"}
+\NormalTok{  \}}
+  
+  \ControlFlowTok{else}\NormalTok{  \{}
+\NormalTok{    url <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}
+      \StringTok{"https://www.tripadvisor.com/Airline_Review-d8729069-Reviews-or"}\NormalTok{,i,}\StringTok{"-Emirates#REVIEWS"}\NormalTok{, }
+      \DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+\NormalTok{  \}}
+  
+\NormalTok{  reviews <-}\StringTok{ }\NormalTok{url }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{read_html}\NormalTok{() }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{html_nodes}\NormalTok{(}\StringTok{"#REVIEWS .innerBubble"}\NormalTok{)}
+  
+\NormalTok{  id <-}\StringTok{ }\NormalTok{reviews }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{html_node}\NormalTok{(}\StringTok{".quote a"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{html_attr}\NormalTok{(}\StringTok{"id"}\NormalTok{)}
+  
+\NormalTok{  quote <-}\StringTok{ }\NormalTok{reviews }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{html_node}\NormalTok{(}\StringTok{".quote span"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{html_text}\NormalTok{()}
+  
+\NormalTok{  rating <-}\StringTok{ }\NormalTok{reviews }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{html_node}\NormalTok{(}\StringTok{".rating .rating_s_fill"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{html_attr}\NormalTok{(}\StringTok{"alt"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{gsub}\NormalTok{(}\StringTok{" of 5 stars"}\NormalTok{, }\StringTok{""}\NormalTok{, .) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{as.integer}\NormalTok{()}
+  
+\NormalTok{  date <-}\StringTok{ }\NormalTok{reviews }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{html_node}\NormalTok{(}\StringTok{".rating .ratingDate"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{html_attr}\NormalTok{(}\StringTok{"title"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{strptime}\NormalTok{(}\StringTok{"%b %d, %Y"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{as.POSIXct}\NormalTok{()}
+  
+\NormalTok{  review <-}\StringTok{ }\NormalTok{reviews }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{html_node}\NormalTok{(}\StringTok{".entry .partial_entry"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{html_text}\NormalTok{()}
+  
+\NormalTok{  df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(id, quote, rating, date, review, }\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{  df_total <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(df_total, df)}
+\NormalTok{\}}
+
+\CommentTok{# Save an object to a file}
+\KeywordTok{saveRDS}\NormalTok{(df_total, }\DataTypeTok{file =} \StringTok{"tripadvisor_turkishairlines6846.rds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trip_turkishairlines <-}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\DataTypeTok{file =} \StringTok{"tripadvisor_turkishairlines6846.rds"}\NormalTok{)}
+
+\NormalTok{trip_turkishairlines }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(id, date, quote, rating, review) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 5
+##   id          date                quote     rating review                 
+##   <chr>       <dttm>              <chr>      <int> <chr>                  
+## 1 rn575914601 2018-04-26 00:00:00 Never ag~     NA "\nTo start with me an~
+## 2 rn575863809 2018-04-26 00:00:00 Istanbul~     NA "\nTurkish airlines is~
+## 3 rn575859234 2018-04-26 00:00:00 Broke my~     NA "\nTravelled from Atat~
+## 4 rn575854758 2018-04-26 00:00:00 comforta~     NA "\nit is amazing trave~
+## 5 rn575817214 2018-04-26 00:00:00 Despite ~     NA "\nAlways like travell~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trip_turkishairlines }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(review) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 1
+##   review                                                                  
+##   <chr>                                                                   
+## 1 "\nTo start with me and my sister had a connection in Istanbul where th~
+\end{verbatim}
+
+\section{Tokenization}\label{tokenization}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidytext)}
+\KeywordTok{data}\NormalTok{(stop_words)}
+
+\CommentTok{# Custom stop words}
+\NormalTok{custom_stop_words <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{word =} \KeywordTok{c}\NormalTok{(}\StringTok{"miss"}\NormalTok{, }\StringTok{"flight"}\NormalTok{, }\StringTok{"tukish"}\NormalTok{, }
+                                         \StringTok{"airlines"}\NormalTok{, }\StringTok{"flights"}\NormalTok{, }
+                                         \StringTok{"airline"}\NormalTok{, }\StringTok{"turkish"}\NormalTok{, }\StringTok{"de"}\NormalTok{), }
+                                \DataTypeTok{lexicon =} \KeywordTok{c}\NormalTok{(}\StringTok{"custom"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{rbind}\NormalTok{(stop_words)}
+
+\NormalTok{tokenize <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(file, data_type) \{}
+\NormalTok{  data_tibble <-}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{()}
+  
+\NormalTok{  data_vector <-}\StringTok{ }\NormalTok{data_tibble }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{pull}\NormalTok{(data_type) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{iconv}\NormalTok{(}\DataTypeTok{from =} \StringTok{"UTF-8"}\NormalTok{, }\DataTypeTok{to =} \StringTok{"Latin1"}\NormalTok{)}
+  
+\NormalTok{  tokens <-}\StringTok{ }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{(data_vector) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(value)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{response_number =} \KeywordTok{rownames}\NormalTok{(.)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(response_number, value) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{tidytext}\OperatorTok{::}\KeywordTok{unnest_tokens}\NormalTok{(word, value)}
+  
+\NormalTok{  tokens}
+\NormalTok{\}}
+
+\CommentTok{# Convert non_base verbs into base verbs}
+
+\NormalTok{extract_non_base <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data) \{}
+\NormalTok{  data }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{rename}\NormalTok{(}\DataTypeTok{non_base =}\NormalTok{ word) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{left_join}\NormalTok{(}\KeywordTok{readRDS}\NormalTok{(}\StringTok{"sahban_base_lexicon"}\NormalTok{), }\DataTypeTok{by =} \StringTok{"non_base"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{base =} \KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(base), non_base, base)) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{rename}\NormalTok{(}\DataTypeTok{word =}\NormalTok{ base) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\KeywordTok{one_of}\NormalTok{(}\StringTok{"non_base"}\NormalTok{)) }
+\NormalTok{\}}
+
+\NormalTok{facebook_tokens <-}\StringTok{ }\KeywordTok{tokenize}\NormalTok{(}\StringTok{"300_posts_comments"}\NormalTok{, }\StringTok{"comments"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{extract_non_base}\NormalTok{()}
+\NormalTok{tripadvisor_tokens <-}\StringTok{ }\KeywordTok{tokenize}\NormalTok{(}\StringTok{"tripadvisor_turkishairlines6846.rds"}\NormalTok{, }\StringTok{"review"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{extract_non_base}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{saveRDS}\NormalTok{(tokens_count, }\StringTok{"tokens_count_300"}\NormalTok{)}
+\KeywordTok{saveRDS}\NormalTok{(tokens_count, }\StringTok{"TA_tokens_count_6846"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{facebook_tokens }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 32,164 x 2
+##    response_number word   
+##    <chr>           <chr>  
+##  1 1               direct 
+##  2 1               flight 
+##  3 1               from   
+##  4 1               ireland
+##  5 1               to     
+##  6 1               bodrum 
+##  7 1               badly  
+##  8 1               need   
+##  9 1               even   
+## 10 1               twice  
+## # ... with 32,154 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tripadvisor_tokens }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 325,228 x 2
+##    response_number word      
+##    <chr>           <chr>     
+##  1 1               to        
+##  2 1               start     
+##  3 1               with      
+##  4 1               me        
+##  5 1               and       
+##  6 1               my        
+##  7 1               sister    
+##  8 1               had       
+##  9 1               a         
+## 10 1               connection
+## # ... with 325,218 more rows
+\end{verbatim}
+
+\section{Word Count}\label{word-count}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{word_count <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data) \{}
+  \KeywordTok{readRDS}\NormalTok{(data) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{anti_join}\NormalTok{(custom_stop_words, }\DataTypeTok{by =} \StringTok{"word"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{count}\NormalTok{(word, }\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{()}
+\NormalTok{\}}
+
+\NormalTok{facebook_word_count <-}\StringTok{ }\KeywordTok{word_count}\NormalTok{(}\StringTok{"facebook_tokens"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `word` joining character vector and factor, coercing into
+## character vector
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tripadvisor_word_count <-}\StringTok{ }\KeywordTok{word_count}\NormalTok{(}\StringTok{"tripadvisor_tokens"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Column `word` joining character vector and factor, coercing into
+## character vector
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{facebook_word_count}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 7,716 x 2
+##    word         n
+##    <chr>    <int>
+##  1 fly        226
+##  2 love       224
+##  3 istanbul   185
+##  4 nice       141
+##  5 service     96
+##  6 3           82
+##  7 time        79
+##  8 travel      76
+##  9 day         67
+## 10 world       66
+## # ... with 7,706 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tripadvisor_word_count}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 9,199 x 2
+##    word            n
+##    <chr>       <int>
+##  1 service      3067
+##  2 food         2994
+##  3 istanbul     2531
+##  4 time         2310
+##  5 fly          2107
+##  6 seat         1991
+##  7 staff        1419
+##  8 class        1149
+##  9 comfortable  1002
+## 10 airport       949
+## # ... with 9,189 more rows
+\end{verbatim}
+
+\section{Word Count Plot}\label{word-count-plot}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{word_count_plot <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data, min_count) \{}
+\NormalTok{  tokens_count <-}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(data)}
+  
+\NormalTok{  tokens_count }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{anti_join}\NormalTok{(custom_stop_words) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{filter}\NormalTok{(n }\OperatorTok{>}\StringTok{ }\NormalTok{min_count) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{word =} \KeywordTok{reorder}\NormalTok{(word, n)) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{ggplot2}\OperatorTok{::}\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{mapping =}\NormalTok{ ggplot2}\OperatorTok{::}\KeywordTok{aes}\NormalTok{(word, n)) }\OperatorTok{+}
+\StringTok{    }\NormalTok{ggplot2}\OperatorTok{::}\KeywordTok{geom_col}\NormalTok{() }\OperatorTok{+}
+\StringTok{    }\NormalTok{ggplot2}\OperatorTok{::}\KeywordTok{xlab}\NormalTok{(}\StringTok{"Most Frequent Words"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\NormalTok{ggplot2}\OperatorTok{::}\KeywordTok{coord_flip}\NormalTok{()}
+\NormalTok{\}}
+
+\KeywordTok{word_count_plot}\NormalTok{(}\StringTok{"tokens_count_300"}\NormalTok{, }\DecValTok{25}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Column `word` joining character vector and factor, coercing into
+## character vector
+\end{verbatim}
+
+\includegraphics{Thesis_Code_files/figure-latex/wordcountplot-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{word_count_plot}\NormalTok{(}\StringTok{"TA_tokens_count_6846"}\NormalTok{, }\DecValTok{300}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Column `word` joining character vector and factor, coercing into
+## character vector
+\end{verbatim}
+
+\includegraphics{Thesis_Code_files/figure-latex/wordcountplot-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Adding words manually to the lexicon}
+\NormalTok{sahban_base_lexicon <-}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\StringTok{"sahban_base_lexicon"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{bind_rows}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{base =} \KeywordTok{c}\NormalTok{(}\StringTok{"travel"}\NormalTok{, }\StringTok{"travel"}\NormalTok{), }
+                              \DataTypeTok{non_base =} \KeywordTok{c}\NormalTok{(}\StringTok{"travelled"}\NormalTok{, }\StringTok{"travelling"}\NormalTok{)))}
+\KeywordTok{saveRDS}\NormalTok{(sahban_base_lexicon, }\StringTok{"sahban_base_lexicon"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Indexed Response Function}\label{indexed-response-function}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numbered_response_tokens <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(file, response_type) \{}
+  
+\NormalTok{  dataset <-}\StringTok{  }\KeywordTok{readRDS}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file)}
+  
+\NormalTok{  dataset }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{response_type =} 
+                    \KeywordTok{iconv}\NormalTok{(}\KeywordTok{pull}\NormalTok{(., response_type), }
+                          \DataTypeTok{from =} \StringTok{"UTF-8"}\NormalTok{, }\DataTypeTok{to =} \StringTok{"Latin1"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{post_number =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{factor}\NormalTok{(id))) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{group_by}\NormalTok{(id) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate_if}\NormalTok{(is.factor, as.character)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Convert non_base verbs into base verbs}
+
+\NormalTok{extract_non_base <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data) \{}
+\NormalTok{  data }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{rename}\NormalTok{(}\DataTypeTok{non_base =}\NormalTok{ word) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{left_join}\NormalTok{(}\KeywordTok{readRDS}\NormalTok{(}\StringTok{"sahban_base_lexicon"}\NormalTok{), }\DataTypeTok{by =} \StringTok{"non_base"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{base =} \KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(base), non_base, base)) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{rename}\NormalTok{(}\DataTypeTok{word =}\NormalTok{ base) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\KeywordTok{one_of}\NormalTok{(}\StringTok{"non_base"}\NormalTok{)) }
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Indexed Tokenization}\label{indexed-tokenization}
+
+The \texttt{numbererd\_response\_function()} is used to find out
+numbered tokenization.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy_response_facebook <-}\StringTok{ }
+\StringTok{  }\KeywordTok{numbered_response_tokens}\NormalTok{(}\StringTok{"300_posts_comments"}\NormalTok{, }\StringTok{"comments"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{comment_number =} \KeywordTok{row_number}\NormalTok{()) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(id, post_number, }\DataTypeTok{response_number =}\NormalTok{ comment_number, }
+\NormalTok{                comments, created_time, type, likes_count, comments_count, }
+\NormalTok{                shares_count) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tidytext}\OperatorTok{::}\KeywordTok{unnest_tokens}\NormalTok{(word, comments) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{anti_join}\NormalTok{(custom_stop_words) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{extract_non_base}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Column `word` joining character vector and factor, coercing into
+## character vector
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy_response_tripadvisor <-}\StringTok{ }
+\StringTok{  }\KeywordTok{numbered_response_tokens}\NormalTok{(}\StringTok{"tripadvisor_turkishairlines6846.rds"}\NormalTok{, }\StringTok{"review"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(id, }\DataTypeTok{response_number =}\NormalTok{ post_number, review, quote, rating, date) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tidytext}\OperatorTok{::}\KeywordTok{unnest_tokens}\NormalTok{(word, review) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{anti_join}\NormalTok{(custom_stop_words) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{extract_non_base}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Column `word` joining character vector and factor, coercing into
+## character vector
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy_response_facebook }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(post_number, response_number, word, type) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{subset}\NormalTok{(}\DataTypeTok{select =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Adding missing grouping variables: `id`
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 23,912 x 4
+##    post_number response_number word      type 
+##          <dbl>           <int> <chr>     <chr>
+##  1         293               1 direct    photo
+##  2         293               1 ireland   photo
+##  3         293               1 bodrum    photo
+##  4         293               1 badly     photo
+##  5         293               1 week      photo
+##  6         293               1 summer    photo
+##  7         293               1 fantastic photo
+##  8         293               2 curious   photo
+##  9         293               2 tbilisi   photo
+## 10         293               3 fligths   photo
+## # ... with 23,902 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy_response_tripadvisor }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(id, response_number, word, quote)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 124,181 x 4
+## # Groups:   id [6,846]
+##    id          response_number word        quote          
+##    <chr>                 <dbl> <chr>       <chr>          
+##  1 rn575914601            6846 start       Never again..!!
+##  2 rn575914601            6846 sister      Never again..!!
+##  3 rn575914601            6846 connection  Never again..!!
+##  4 rn575914601            6846 istanbul    Never again..!!
+##  5 rn575914601            6846 staff       Never again..!!
+##  6 rn575914601            6846 sister      Never again..!!
+##  7 rn575914601            6846 15          Never again..!!
+##  8 rn575914601            6846 minutes     Never again..!!
+##  9 rn575914601            6846 explanation Never again..!!
+## 10 rn575914601            6846 talk        Never again..!!
+## # ... with 124,171 more rows
+\end{verbatim}
+
+\section{Sentence Tokenization}\label{sentence-tokenization}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{untidy_response_facebook <-}\StringTok{ }
+\StringTok{  }\KeywordTok{numbered_response_tokens}\NormalTok{(}\StringTok{"300_posts_comments"}\NormalTok{, }\StringTok{"comments"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{comment_number =} \KeywordTok{row_number}\NormalTok{()) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(id, post_number, comment_number, comments, }
+\NormalTok{                created_time, type, likes_count, comments_count, }
+\NormalTok{                shares_count)}
+
+\NormalTok{untidy_response_tripadvisor <-}\StringTok{ }
+\StringTok{  }\KeywordTok{numbered_response_tokens}\NormalTok{(}\StringTok{"tripadvisor_turkishairlines6846.rds"}\NormalTok{, }\StringTok{"review"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(id, post_number, review, quote, rating, date)}
+
+
+\NormalTok{sentence_tokens <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ untidy_response_facebook, }
+                            \DataTypeTok{response_column =} \StringTok{"comments"}\NormalTok{, }
+                            \DataTypeTok{group_by =} \StringTok{"comment_number"}\NormalTok{) \{}
+  \CommentTok{# English Dictionary}
+\NormalTok{  qdapDictionaries}\OperatorTok{::}\NormalTok{DICTIONARY[,}\DecValTok{1}\NormalTok{]}
+  
+\NormalTok{  en_word_comments <-}\StringTok{ }\NormalTok{data }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{tidytext}\OperatorTok{::}\KeywordTok{unnest_tokens_}\NormalTok{(}\StringTok{"word"}\NormalTok{, response_column) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{filter}\NormalTok{(word }\OperatorTok{%in%}\StringTok{ }\NormalTok{qdapDictionaries}\OperatorTok{::}\NormalTok{DICTIONARY[,}\DecValTok{1}\NormalTok{])}
+  
+\NormalTok{  en_word_sentence_comments <-}\StringTok{ }\NormalTok{en_word_comments }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{group_by_}\NormalTok{(}\StringTok{"id"}\NormalTok{, group_by) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{sentence =} \KeywordTok{paste}\NormalTok{(word, }\DataTypeTok{collapse =} \StringTok{" "}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{distinct}\NormalTok{(sentence, }\DataTypeTok{.keep_all =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{as_data_frame}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{sentence =} \KeywordTok{iconv}\NormalTok{(sentence, }\DataTypeTok{to =} \StringTok{'latin1'}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{()}
+  
+  \CommentTok{# Sentence as tokens with post number and comment number}
+  
+\NormalTok{  en_word_sentence_comments }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select_}\NormalTok{(}\StringTok{"id"}\NormalTok{, group_by, }\StringTok{"sentence"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{tidytext}\OperatorTok{::}\KeywordTok{unnest_tokens}\NormalTok{(sentences, sentence, }\DataTypeTok{token =} \StringTok{"sentences"}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{facebook_sentence_tokens <-}\StringTok{ }
+\StringTok{  }\KeywordTok{sentence_tokens}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ untidy_response_facebook,}
+                  \DataTypeTok{response_column =} \StringTok{"comments"}\NormalTok{,}
+                  \DataTypeTok{group_by =} \StringTok{"comment_number"}\NormalTok{)}
+
+\NormalTok{tripadvisor_sentence_tokens <-}\StringTok{ }
+\StringTok{  }\KeywordTok{sentence_tokens}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ untidy_response_tripadvisor,}
+                  \DataTypeTok{response_column =} \StringTok{"review"}\NormalTok{,}
+                  \DataTypeTok{group_by =} \StringTok{"post_number"}\NormalTok{)}
+
+\NormalTok{facebook_sentence_tokens }
+
+\NormalTok{tripadvisor_sentence_tokens}
+
+\NormalTok{tripadvisor_sentence_tokens}
+\NormalTok{  dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(sentences) }
+\end{Highlighting}
+\end{Shaded}
+
+\section{Response sentiments}\label{response-sentiments}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{response_sentiments <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data, lexicon, }\DataTypeTok{group_by =}\NormalTok{ sentiment) \{}
+\NormalTok{  data }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{inner_join}\NormalTok{(}\KeywordTok{get_sentiments}\NormalTok{(lexicon), }\DataTypeTok{by =} \StringTok{"word"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{count}\NormalTok{(response_number, sentiment) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{tidyr}\OperatorTok{::}\KeywordTok{spread}\NormalTok{(sentiment, n, }\DataTypeTok{fill =} \DecValTok{0}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{sentiment =}\NormalTok{ positive }\OperatorTok{-}\StringTok{ }\NormalTok{negative) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{()}
+\NormalTok{\}}
+
+\CommentTok{# bing}
+\NormalTok{facebook_sentiments_bing <-}\StringTok{ }\KeywordTok{response_sentiments}\NormalTok{(tidy_response_facebook, }\StringTok{"bing"}\NormalTok{)}
+\NormalTok{tripadvisor_sentiments_bing <-}\StringTok{ }\KeywordTok{response_sentiments}\NormalTok{(tidy_response_tripadvisor, }\StringTok{"bing"}\NormalTok{)}
+
+\CommentTok{# nrc}
+\NormalTok{facebook_sentiments_nrc <-}\StringTok{ }\KeywordTok{response_sentiments}\NormalTok{(tidy_response_facebook, }\StringTok{"nrc"}\NormalTok{)}
+\NormalTok{tripadvisor_sentiments_nrc <-}\StringTok{ }\KeywordTok{response_sentiments}\NormalTok{(tidy_response_tripadvisor, }\StringTok{"nrc"}\NormalTok{)}
+
+\CommentTok{#afinn}
+\NormalTok{sentiments_afinn <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data) \{}
+\NormalTok{  data }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{inner_join}\NormalTok{(tidytext}\OperatorTok{::}\KeywordTok{get_sentiments}\NormalTok{(}\StringTok{"afinn"}\NormalTok{), }\DataTypeTok{by =} \StringTok{"word"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{group_by}\NormalTok{(id, response_number) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{score =} \KeywordTok{sum}\NormalTok{(score)) }
+\NormalTok{\}}
+
+\NormalTok{facebook_sentiments_afinn <-}\StringTok{ }\KeywordTok{sentiments_afinn}\NormalTok{(tidy_response_facebook)}
+\NormalTok{tripadvisor_sentiments_afinn <-}\StringTok{ }\KeywordTok{sentiments_afinn}\NormalTok{(tidy_response_tripadvisor)}
+
+\NormalTok{facebook_sentiments_bing }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(response_number, negative, positive, sentiment) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1,586 x 4
+##    response_number negative positive sentiment
+##              <int>    <dbl>    <dbl>     <dbl>
+##  1               1        0        1         1
+##  2               2        0        1         1
+##  3               3        0        1         1
+##  4               3        1        0        -1
+##  5               4        0        1         1
+##  6               2        0        1         1
+##  7               3        3        1        -2
+##  8              18        0        1         1
+##  9              21        0        2         2
+## 10              23        0        1         1
+## # ... with 1,576 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tripadvisor_sentiments_bing }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6,423 x 5
+##    id          response_number negative positive sentiment
+##    <chr>                 <dbl>    <dbl>    <dbl>     <dbl>
+##  1 rn342674723               1        1        0        -1
+##  2 rn342740773               2        1        3         2
+##  3 rn342772345               3        4        1        -3
+##  4 rn342937701               4        0        3         3
+##  5 rn343011985               5        1        1         0
+##  6 rn343117108               6        0        1         1
+##  7 rn343117743               7        0        2         2
+##  8 rn343141565               8        4        2        -2
+##  9 rn343168849               9        0        4         4
+## 10 rn343189478              10        0        3         3
+## # ... with 6,413 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{facebook_sentiments_nrc }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1,867 x 13
+##    id      response_number anger anticipation disgust  fear   joy negative
+##    <chr>             <int> <dbl>        <dbl>   <dbl> <dbl> <dbl>    <dbl>
+##  1 904300~               1     0            0       0     0     2        0
+##  2 904300~               2     0            0       0     0     1        0
+##  3 904300~               3     0            0       0     0     1        0
+##  4 904300~               4     0            0       0     0     0        0
+##  5 904300~               1     0            1       0     0     0        1
+##  6 904300~               4     0            0       0     0     0        0
+##  7 904300~               2     1            2       0     1     1        0
+##  8 904300~               3     0            0       0     0     0        3
+##  9 904300~               4     0            0       0     1     0        0
+## 10 904300~               5     0            1       0     0     0        0
+## # ... with 1,857 more rows, and 5 more variables: positive <dbl>,
+## #   sadness <dbl>, surprise <dbl>, trust <dbl>, sentiment <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tripadvisor_sentiments_nrc }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6,788 x 13
+##    id      response_number anger anticipation disgust  fear   joy negative
+##    <chr>             <dbl> <dbl>        <dbl>   <dbl> <dbl> <dbl>    <dbl>
+##  1 rn3426~               1     0            2       0     0     0        2
+##  2 rn3427~               2     1            2       1     2     3        0
+##  3 rn3427~               3     2            0       2     1     0        3
+##  4 rn3429~               4     0            2       0     0     3        0
+##  5 rn3430~               5     1            2       1     1     1        1
+##  6 rn3431~               6     0            2       0     0     1        0
+##  7 rn3431~               7     0            3       0     0     4        0
+##  8 rn3431~               8     1            1       1     2     2        4
+##  9 rn3431~               9     0            3       0     0     3        0
+## 10 rn3431~              10     1            2       0     1     2        0
+## # ... with 6,778 more rows, and 5 more variables: positive <dbl>,
+## #   sadness <dbl>, surprise <dbl>, trust <dbl>, sentiment <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{facebook_sentiments_afinn }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1,645 x 3
+## # Groups:   id [?]
+##    id                            response_number score
+##    <chr>                                   <int> <int>
+##  1 90430042759_10155125620582760               1     5
+##  2 90430042759_10155125620582760               2     3
+##  3 90430042759_10155125620582760               3     3
+##  4 90430042759_10155125620582760               7     2
+##  5 90430042759_10155126945012760               3     2
+##  6 90430042759_10155126945012760               4     2
+##  7 90430042759_10155129495572760               2     3
+##  8 90430042759_10155129495572760               3    -3
+##  9 90430042759_10155129495572760              11    -1
+## 10 90430042759_10155129495572760              18     1
+## # ... with 1,635 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tripadvisor_sentiments_afinn}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6,131 x 3
+## # Groups:   id [?]
+##    id          response_number score
+##    <chr>                 <dbl> <int>
+##  1 rn342674723               1     0
+##  2 rn342740773               2     7
+##  3 rn342772345               3    -2
+##  4 rn342937701               4     5
+##  5 rn343011985               5    -3
+##  6 rn343117108               6     2
+##  7 rn343117743               7     5
+##  8 rn343141565               8    -5
+##  9 rn343168849               9     6
+## 10 rn343189478              10     7
+## # ... with 6,121 more rows
+\end{verbatim}
+
+\section{Sentiments to All Words
+Ratio}\label{sentiments-to-all-words-ratio}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sentiment_token_ratio <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data, }\DataTypeTok{sentiment_type =} \StringTok{"negative"}\NormalTok{) \{}
+  
+\NormalTok{  negative_sentiment <-}\StringTok{ }\KeywordTok{get_sentiments}\NormalTok{(}\StringTok{"bing"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{filter}\NormalTok{(sentiment }\OperatorTok{==}\StringTok{ }\NormalTok{sentiment_type)}
+  
+\NormalTok{  wordcounts <-}\StringTok{ }\NormalTok{data }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{group_by}\NormalTok{(response_number) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{word =} \KeywordTok{n}\NormalTok{())}
+  
+\NormalTok{  data }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{semi_join}\NormalTok{(negative_sentiment) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{group_by}\NormalTok{(id, response_number) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{negativewords =} \KeywordTok{n}\NormalTok{()) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{left_join}\NormalTok{(wordcounts, }\DataTypeTok{by =} \KeywordTok{c}\NormalTok{(}\StringTok{"response_number"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{ratio =}\NormalTok{ negativewords}\OperatorTok{/}\NormalTok{word) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{top_n}\NormalTok{(}\DecValTok{10}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(ratio))}
+  
+\NormalTok{\}}
+
+\NormalTok{facebook_negative_sentiment_ratio <-}\StringTok{ }
+\StringTok{  }\KeywordTok{sentiment_token_ratio}\NormalTok{(tidy_response_facebook, }\StringTok{"negative"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+\end{verbatim}
+
+\begin{verbatim}
+## Selecting by ratio
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tripadvisor_negative_sentiment_ratio <-}\StringTok{ }
+\StringTok{  }\KeywordTok{sentiment_token_ratio}\NormalTok{(tidy_response_tripadvisor, }\StringTok{"negative"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+## Selecting by ratio
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{facebook_positive_sentiment_ratio <-}\StringTok{ }
+\StringTok{  }\KeywordTok{sentiment_token_ratio}\NormalTok{(tidy_response_facebook, }\StringTok{"positive"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+## Selecting by ratio
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tripadvisor_positive_sentiment_ratio <-}\StringTok{ }
+\StringTok{  }\KeywordTok{sentiment_token_ratio}\NormalTok{(tidy_response_tripadvisor, }\StringTok{"positive"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+## Selecting by ratio
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{facebook_negative_sentiment_ratio}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 192 x 5
+##    id                           response_number negativewords  word  ratio
+##    <chr>                                  <int>         <int> <int>  <dbl>
+##  1 90430042759_101551815520227~             281             1     2 0.5   
+##  2 90430042759_101551815520227~             805             1     2 0.5   
+##  3 90430042759_101551815520227~             661             1     3 0.333 
+##  4 90430042759_101551815520227~             687             1     3 0.333 
+##  5 90430042759_101551815520227~             503             2    11 0.182 
+##  6 90430042759_101551815520227~             358             1     6 0.167 
+##  7 90430042759_101551815520227~             314             1     7 0.143 
+##  8 90430042759_101551815520227~             157             1     8 0.125 
+##  9 90430042759_101551815520227~             475             1    10 0.1   
+## 10 90430042759_101551815520227~              69             2    30 0.0667
+## # ... with 182 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tripadvisor_negative_sentiment_ratio}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3,384 x 5
+##    id          response_number negativewords  word ratio
+##    <chr>                 <dbl>         <int> <int> <dbl>
+##  1 rn541387435            4976             5     7 0.714
+##  2 rn465760178            3008             4     8 0.5  
+##  3 rn525881971            4705             4     8 0.5  
+##  4 rn518927507            4384             5    11 0.455
+##  5 rn513737468            3993             4     9 0.444
+##  6 rn425622278            2284             9    21 0.429
+##  7 rn557983424            5965             3     7 0.429
+##  8 rn569818446            6477             3     7 0.429
+##  9 rn530267095            4794             4    10 0.4  
+## 10 rn547414313            5547             4    10 0.4  
+## # ... with 3,374 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{numbered_response_tokens}\NormalTok{(}
+  \StringTok{"tripadvisor_turkishairlines6846.rds"}\NormalTok{, }\StringTok{"review"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(id, }\DataTypeTok{response_number =}\NormalTok{ post_number, review, }
+\NormalTok{                quote, rating, date) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{filter}\NormalTok{(response_number }\OperatorTok{==}\StringTok{ }\DecValTok{4976}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(review, id)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 2
+## # Groups:   id [1]
+##   review                                                           id     
+##   <chr>                                                            <chr>  
+## 1 "\nthe flight was very bad and the food very bad it so bad and ~ rn5413~
+\end{verbatim}
+
+\section{Most Frequent Sentiments}\label{most-frequent-sentiments}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{frequent_sentiments <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data) \{}
+\NormalTok{  data }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{inner_join}\NormalTok{(tidytext}\OperatorTok{::}\KeywordTok{get_sentiments}\NormalTok{(}\StringTok{"bing"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{count}\NormalTok{(word, sentiment, }\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{facebook_frequent_sentiments <-}\StringTok{ }\KeywordTok{frequent_sentiments}\NormalTok{(tidy_response_facebook)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tripadvisor_frequent_sentiments <-}\StringTok{ }\KeywordTok{frequent_sentiments}\NormalTok{(tidy_response_tripadvisor)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{facebook_frequent_sentiments}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 384 x 3
+##    word            sentiment     n
+##    <chr>           <chr>     <int>
+##  1 love            positive    328
+##  2 nice            positive    155
+##  3 beautiful       positive     87
+##  4 congratulations positive     83
+##  5 wow             positive     80
+##  6 amaze           positive     73
+##  7 free            positive     72
+##  8 happy           positive     69
+##  9 bless           positive     45
+## 10 super           positive     37
+## # ... with 374 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tripadvisor_frequent_sentiments}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1,317 x 3
+##    word        sentiment     n
+##    <chr>       <chr>     <int>
+##  1 comfortable positive   1026
+##  2 excellent   positive    927
+##  3 nice        positive    816
+##  4 friendly    positive    700
+##  5 delay       negative    552
+##  6 helpful     positive    472
+##  7 clean       positive    406
+##  8 free        positive    399
+##  9 bad         negative    324
+## 10 recommend   positive    318
+## # ... with 1,307 more rows
+\end{verbatim}
+
+\section{Plot Frequent Sentiments
+Counts}\label{plot-frequent-sentiments-counts}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot_sentiment_count <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data) \{}
+\NormalTok{  data }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{group_by}\NormalTok{(sentiment) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{top_n}\NormalTok{(}\DecValTok{10}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{word =} \KeywordTok{reorder}\NormalTok{(word, n)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{ggplot2}\OperatorTok{::}\KeywordTok{ggplot}\NormalTok{(ggplot2}\OperatorTok{::}\KeywordTok{aes}\NormalTok{(word, n, }\DataTypeTok{fill =}\NormalTok{ sentiment)) }\OperatorTok{+}
+\StringTok{    }\NormalTok{ggplot2}\OperatorTok{::}\KeywordTok{geom_col}\NormalTok{(}\DataTypeTok{show.legend =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\NormalTok{ggplot2}\OperatorTok{::}\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{sentiment, }\DataTypeTok{scales =} \StringTok{"free_y"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\NormalTok{ggplot2}\OperatorTok{::}\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y =} \StringTok{"Frequent Sentiments"}\NormalTok{,}
+                  \DataTypeTok{x =} \StringTok{"Frequency"}\NormalTok{) }\OperatorTok{+}
+\StringTok{    }\NormalTok{ggplot2}\OperatorTok{::}\KeywordTok{coord_flip}\NormalTok{()}
+\NormalTok{\}}
+
+\KeywordTok{plot_sentiment_count}\NormalTok{(facebook_frequent_sentiments)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Selecting by n
+\end{verbatim}
+
+\includegraphics{Thesis_Code_files/figure-latex/plotsentimentcount-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot_sentiment_count}\NormalTok{(tripadvisor_frequent_sentiments)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Selecting by n
+\end{verbatim}
+
+\includegraphics{Thesis_Code_files/figure-latex/plotsentimentcount-2.pdf}
+
+\section{Word Cloud}\label{word-cloud}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(wordcloud)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: RColorBrewer
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{word_cloud <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(data, max_words) \{}
+\NormalTok{  data }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{ungroup}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{count}\NormalTok{(word) }\OperatorTok{%>%}
+\StringTok{    }\KeywordTok{with}\NormalTok{(wordcloud}\OperatorTok{::}\KeywordTok{wordcloud}\NormalTok{(word, n, }\DataTypeTok{max.words =}\NormalTok{ max_words))}
+\NormalTok{\}}
+
+\KeywordTok{word_cloud}\NormalTok{(tidy_response_facebook, }\DataTypeTok{max_words =} \DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Thesis_Code_files/figure-latex/wordcloud-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{word_cloud}\NormalTok{(tidy_response_tripadvisor, }\DataTypeTok{max_words =} \DecValTok{75}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in wordcloud::wordcloud(word, n, max.words = max_words): service
+## could not be fit on page. It will not be plotted.
+\end{verbatim}
+
+\includegraphics{Thesis_Code_files/figure-latex/wordcloud-2.pdf}
+
+\section{Sentiment Cloud}\label{sentiment-cloud}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(reshape2)}
+
+\NormalTok{sentiment_cloud <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(dataset) \{}
+\NormalTok{  dataset }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{inner_join}\NormalTok{(tidytext}\OperatorTok{::}\KeywordTok{get_sentiments}\NormalTok{(}\StringTok{"bing"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{count}\NormalTok{(word, sentiment, }\DataTypeTok{sort =} \OtherTok{TRUE}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{reshape2}\OperatorTok{::}\KeywordTok{acast}\NormalTok{(word }\OperatorTok{~}\StringTok{ }\NormalTok{sentiment, }\DataTypeTok{value.var =} \StringTok{"n"}\NormalTok{, }\DataTypeTok{fill =} \DecValTok{0}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{    }\NormalTok{wordcloud}\OperatorTok{::}\KeywordTok{comparison.cloud}\NormalTok{(}\DataTypeTok{colors =} \KeywordTok{c}\NormalTok{(}\StringTok{"#F8766D"}\NormalTok{, }\StringTok{"#00BFC4"}\NormalTok{),}
+                                \DataTypeTok{max.words =} \DecValTok{100}\NormalTok{)}
+\NormalTok{\}}
+
+\KeywordTok{sentiment_cloud}\NormalTok{(tidy_response_facebook)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+\end{verbatim}
+
+\begin{verbatim}
+## Aggregation function missing: defaulting to length
+\end{verbatim}
+
+\includegraphics{Thesis_Code_files/figure-latex/sentimentcloud-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sentiment_cloud}\NormalTok{(tidy_response_tripadvisor)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "word"
+## Aggregation function missing: defaulting to length
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wordcloud::comparison.cloud(., colors = c("#F8766D",
+## "#00BFC4"), : recommend could not be fit on page. It will not be plotted.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wordcloud::comparison.cloud(., colors = c("#F8766D",
+## "#00BFC4"), : outstanding could not be fit on page. It will not be plotted.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wordcloud::comparison.cloud(., colors = c("#F8766D",
+## "#00BFC4"), : pleasantly could not be fit on page. It will not be plotted.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wordcloud::comparison.cloud(., colors = c("#F8766D",
+## "#00BFC4"), : satisfy could not be fit on page. It will not be plotted.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wordcloud::comparison.cloud(., colors = c("#F8766D",
+## "#00BFC4"), : convenient could not be fit on page. It will not be plotted.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wordcloud::comparison.cloud(., colors = c("#F8766D",
+## "#00BFC4"), : pleasure could not be fit on page. It will not be plotted.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wordcloud::comparison.cloud(., colors = c("#F8766D",
+## "#00BFC4"), : awesome could not be fit on page. It will not be plotted.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wordcloud::comparison.cloud(., colors = c("#F8766D",
+## "#00BFC4"), : improve could not be fit on page. It will not be plotted.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in wordcloud::comparison.cloud(., colors = c("#F8766D",
+## "#00BFC4"), : welcome could not be fit on page. It will not be plotted.
+\end{verbatim}
+
+\includegraphics{Thesis_Code_files/figure-latex/sentimentcloud-2.pdf}
+
+
+\end{document}

@@ -38,22 +38,24 @@ threehundred_posts <- readRDS("300_posts")
 
 
 # Saving comments for first post in new variable
-full_comments <- setNames(as.data.frame(threehundred_posts[[1]]$comments$message), 
-                          "comments") %>% 
+full_comments <- threehundred_posts[[1]]$comments$message %>%
+  as.data.frame() %>% 
+  setNames("comments") %>%
   dplyr::mutate(id = data_turkishairlines_id[1])
 
 # Expanding full_comments by adding comments of remaining posts. 
 for (i in 1:299) {
-  comment <- setNames(as.data.frame(threehundred_posts[[i+1]]$comments$message), 
-                      "comments") %>% 
+  comment <- threehundred_posts[[i+1]]$comments$message %>% 
+    as.data.frame() %>% 
+    setNames("comments") %>%
     dplyr::mutate(id = data_turkishairlines_id[i+1])
   full_comments = rbind(full_comments, comment)
 }
 
 # Assigning the post ids to its comments. The posts ids are repeated when there 
 # are more than one comments.  
-full_comment_post <- dplyr::left_join(full_comments, 
-                                      data_turkishairlines, by = "id")
+full_comment_post <- full_comments %>% 
+  dplyr::left_join(data_turkishairlines, by = "id")
 
 # Saving the comments of posts in R data file. 
 # saveRDS(full_comment_post, "300_posts_comments")
