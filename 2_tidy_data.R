@@ -36,10 +36,24 @@ extract_non_base <- function(data) {
     dplyr::select(-one_of("non_base")) 
 }
 
+# Convert Plurals to Singular Noun
+
+extract_plural <- function(data) {
+  data %>% 
+    dplyr::rename(plural = word) %>% 
+    dplyr::left_join(readRDS("sahban_noun_lexicon"), by = "plural") %>% 
+    dplyr::mutate(noun = ifelse(is.na(noun), plural, noun)) %>% 
+    dplyr::rename(word = noun) %>% 
+    dplyr::select(-one_of("plural"))
+}
+
 facebook_tokens <- tokenize("300_posts_comments", "comments") %>% 
-  extract_non_base()
+  extract_non_base() %>% 
+  extract_plural()
+
 tripadvisor_tokens <- tokenize("tripadvisor_turkishairlines6846.rds", "review") %>% 
-  extract_non_base()
+  extract_non_base() %>% 
+  extract_plural()
 
 saveRDS(facebook_tokens, "facebook_tokens")
 saveRDS(tripadvisor_tokens, "tripadvisor_tokens")

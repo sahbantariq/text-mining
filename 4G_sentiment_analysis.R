@@ -40,6 +40,19 @@ extract_non_base <- function(data) {
     dplyr::select(-one_of("non_base")) 
 }
 
+# Convert plural nouns into singular nouns
+
+extract_plural <- function(data) {
+  data %>% 
+    dplyr::rename(plural = word) %>% 
+    dplyr::left_join(readRDS("sahban_noun_lexicon"), by = "plural") %>%
+    dplyr::mutate(noun = ifelse(is.na(noun), plural, noun)) %>%
+    dplyr::rename(word = noun) %>% 
+    dplyr::select(-one_of("plural"))
+}
+
+
+
 tidy_response_facebook <- 
   numbered_response_tokens("300_posts_comments", "comments") %>% 
   dplyr::mutate(response_number = row_number()) %>% 
@@ -48,7 +61,8 @@ tidy_response_facebook <-
                 shares_count) %>% 
   tidytext::unnest_tokens(word, comments) %>% 
   dplyr::anti_join(custom_stop_words) %>% 
-  extract_non_base()
+  extract_non_base() %>% 
+  extract_plural()
 
 
 tidy_response_tripadvisor <- 
@@ -56,7 +70,8 @@ tidy_response_tripadvisor <-
   dplyr::select(id, response_number = post_number, review, quote, rating, date) %>% 
   tidytext::unnest_tokens(word, review) %>% 
   dplyr::anti_join(custom_stop_words) %>% 
-  extract_non_base()
+  extract_non_base() %>% 
+  extract_plural()
 
 
 # Adding words manually to the lexicon

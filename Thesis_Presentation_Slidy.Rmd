@@ -1,36 +1,108 @@
 ---
-title: "ThesisCode"
-output:
-  word_document: default
-  html_document: default
-  pdf_document: default
+title: "Social Media Mining with R"
+output: slidy_presentation
+author: Sahban Tariq Malik
+date: 13th June, 2018
 ---
 
-## Facebook Data Extraction
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
-```{r setup, eval=FALSE}
-library(Rfacebook)
+Introduction
+========================================================
 
-# Fb Authorization
+- Data mining is the process of extracting useful information from large set of any raw data. 
+- Text mining is a branch of data mining in which raw data is in the textual format.  
+- Social media mining is a branch of text mining in which social media data is used. 
+- R is a programming language with a statistical software environment used to analyze data efficiently.
+
+Features of Textual Data
+========================================================
+
+- Collection of Document
+    - A collection of documents is a group of similar text-based documents.
+    - The reviews of a tourism brand altogether become a collection of documents.
+- Document
+    - A collection of words that represents a unit within a document collection. 
+- Document Features
+    - Character
+    - Word
+    - Term
+    - Concepts
+  
+Social Media Data Structure
+========================================================
+
+Methodology
+========================================================
+![Methodology](Thesis_Presentation-figure/01-img-methodology.png)
+
+- The study builds reuseable R functions for these techniques. 
+
+Data 
+========================================================
+- Turkish Airlines “Türk Hava Yolları” is one of the most famous Turkish brands worldwide.
+- Company's Facebook posts and its comments, likes and shares are extracted for six months, i.e. from 15 March 2017 to 15 October 2017.
+- A total of 6,846 reviews of Turkish airlines are extracted from 686 pages in TripAdvisor, i.e. from January 2016 to April 2018. 
+
+Text Mining
+========================================================
+
+- Collection of Document
+- Document
+- Document Structure
+- Document Features
+  - Character
+  - Word
+  - Term
+  - Concepts
+
+Social Media Mining
+========================================================
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+Methodology
+========================================================
+
+- Data Extraction
+- Data Wrangling
+- Tokenization
+- Data Cleaning
+- Analysis
+
+Data Extraction
+========================================================
+
+```{r auth, eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE}
+# Facebook Authorization
 fb_oauth <- Rfacebook::fbOAuth(
   app_id="1380496555352781",
-  app_secret="eb3abc42d1e00536e6f4e37e58fc0b5d",
+  app_secret="eb3abc...",
   extended_permissions = TRUE)
 
-# Saving variable fb_oauth in a file and loading it
+# Saving variable fb_oauth 
 save(fb_oauth, file="fb_oauth")
-load("fb_oauth")
 
 # Extract posts from turkish airlines page
-turkishairlines <- Rfacebook::getPage(page = "turkishairlines", 
-                                      token = fb_oauth, n = 2000)
+turkishairlines <- 
+  Rfacebook::getPage(
+    page = "turkishairlines",
+    token = fb_oauth, n = 2000)
 
 # Save the posts in R data file
 saveRDS(turkishairlines, "turkishairlines_2000")
 ```
 
-```{r fb_data_id}
+Data Extraction
+========================================================
+```{r fb_data_id, echo=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)
+```
+```{r show_data, echo=FALSE, message=FALSE, warning=FALSE}
 # Read R data file and store in new variable
 data_turkishairlines <- readRDS("turkishairlines_2000")
 
@@ -42,18 +114,17 @@ data_turkishairlines %>%
   dplyr::select(from_id, likes_count, type, comments_count, 
                 shares_count, message) %>% 
   tibble::as_tibble() %>% 
-  head(5)
+  head(2)
 
 data_turkishairlines %>% 
   dplyr::select(message) %>% 
   tibble::as_tibble() %>% 
   head(2)
-
 ```
-```{r savingcommentsdata, eval=FALSE}
+Data Extraction
+========================================================
+```{r savingcommentsdata, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE}
 # Extracting comments and reactions from the extracted posts
-# The comments are extracted using post ids. Therefore, id variable
-# is used. 
 all_posts <- data_turkishairlines_id[1:300] %>% 
   lapply(getPost, n = 50000, token=fb_oauth, 
          comments = TRUE, reactions = TRUE)
@@ -62,12 +133,10 @@ all_posts <- data_turkishairlines_id[1:300] %>%
 saveRDS(all_posts, "300_posts")
 ```
 
-# Converting Facebook lists data into dataframe
-
-```{r datawranglisg of facebookdata}
+Data Extraction
+========================================================
+```{r datawrangling of facebookdata, echo=TRUE, message=FALSE, warning=FALSE}
 # Reading the saved RDS file instead of applying getPost function repeatedly.
-# The resultant variable is a list which includes a post specific list.
-# Within each post specific list there are post comments and reactions.
 threehundred_posts <- readRDS("300_posts") 
 
 # Saving comments for first post in new variable
@@ -95,7 +164,7 @@ saveRDS(full_comment_post, "300_posts_comments")
 ```
 ```{r readingcomments}
 readRDS("300_posts_comments") %>% 
-  subset(select = c(3,1,2,4,5,6,7,8,9,10,11)) %>% 
+  subset(select = c(3,1,2,4,5,6,7,8,9,10)) %>% 
   tibble::as_tibble() %>% 
   head(5)
 
@@ -105,32 +174,9 @@ readRDS("300_posts_comments") %>%
   head(2)
 ```
 
-## Twitter Data Extraction
-
-```{r twiter, eval=FALSE}
-# Load Requried Packages
-library("SnowballC")
-library("tm")
-library("twitteR")
-library("syuzhet")
-
-# Authonitical keys
-consumer_key <- 'tAyR9LyhATfD90aA7Ft1Zfj3I'
-consumer_secret <- 'vX1RHqHHDpnmNOqrGPMVnmnQjQvG98X3xlB7T7zv4hKcvj7tVv'
-access_token <- '2572842085-vExbB4HNvN57zmQhoQdbmutC16a4kdMdh1xVta5'
-access_secret <- 'HtTHSeAOz1WPcUX8nfW5ddwZ1TbXZGFB4pSHU0IZ3agvA'
-
-twitteR::setup_twitter_oauth(consumer_key, consumer_secret, 
-                             access_token, access_secret)
-
-tweets <- userTimeline("turkishairlines", n=200)
-
-```
-
-
-## Trip Advisor Data Extraction
-
-```{r tripadvisor, eval=FALSE}
+Data Extraction
+========================================================
+```{r tripadvisor, echo=FALSE, eval=FALSE, message=FALSE, warning=FALSE}
 library("rvest")
 
 url <- "https://www.tripadvisor.com/Airline_Review-d8729174-Reviews-Turkish-Airlines"
@@ -189,47 +235,27 @@ saveRDS(df_total, file = "tripadvisor_turkishairlines6846.rds")
 trip_turkishairlines <- readRDS(file = "tripadvisor_turkishairlines6846.rds")
 
 trip_turkishairlines %>%
-  dplyr::select(id, date, quote, rating, review) %>% 
+  dplyr::select(id, date, quote, review) %>% 
   tibble::as_tibble() %>% 
   head(5)
 
 trip_turkishairlines %>% 
   dplyr::select(review) %>% 
   tibble::as_tibble() %>% 
-  dplyr::sample_n(1)
+  dplyr::sample_n(3)
 ```
 
-
-# Tokenization
-
-```{r tokenization}
-
+Data Cleaning
+========================================================
+```{r cleaning, echo=TRUE, message=FALSE, warning=FALSE}
 library(tidytext)
 data(stop_words)
-
 # Custom stop words
 custom_stop_words <- data.frame(word = c("miss", "flight", "tukish", 
                                          "airlines", "flights", 
                                          "airline", "turkish", "de"), 
                                 lexicon = c("custom")) %>%
   rbind(stop_words)
-
-tokenize <- function(file, data_type) {
-  data_tibble <- readRDS(file = file) %>% 
-    tibble::as_tibble()
-  
-  data_vector <- data_tibble %>% 
-    dplyr::pull(data_type) %>% 
-    iconv(from = "UTF-8", to = "Latin1")
-  
-  tokens <- tibble::as_tibble(data_vector) %>% 
-    dplyr::filter(!is.na(value)) %>% 
-    dplyr::mutate(response_number = rownames(.)) %>% 
-    dplyr::select(response_number, value) %>% 
-    tidytext::unnest_tokens(word, value)
-  
-  tokens
-}
 
 # Convert non_base verbs into base verbs
 
@@ -252,7 +278,43 @@ extract_plural <- function(data) {
     dplyr::rename(word = noun) %>% 
     dplyr::select(-one_of("plural"))
 }
+```
 
+
+Tokenization
+========================================================
+
+```{r tokenization, echo=FALSE, message=FALSE, warning=FALSE}
+# Custom stop words
+custom_stop_words <- data.frame(word = c("miss", "flight", "tukish", 
+                                         "airlines", "flights", 
+                                         "airline", "turkish", "de"), 
+                                lexicon = c("custom")) %>%
+  rbind(stop_words)
+```
+```{r tokenization1, echo=TRUE, message=FALSE, warning=FALSE}
+tokenize <- function(file, data_type) {
+  data_tibble <- readRDS(file = file) %>% 
+    tibble::as_tibble()
+  
+  data_vector <- data_tibble %>% 
+    dplyr::pull(data_type) %>% 
+    iconv(from = "UTF-8", to = "Latin1")
+  
+  tokens <- tibble::as_tibble(data_vector) %>% 
+    dplyr::filter(!is.na(value)) %>% 
+    dplyr::mutate(response_number = rownames(.)) %>% 
+    dplyr::select(response_number, value) %>% 
+    tidytext::unnest_tokens(word, value)
+  
+  tokens
+}
+```
+
+Tokenization
+========================================================
+
+```{r tokenized, echo=TRUE, message=FALSE, warning=FALSE}
 facebook_tokens <- tokenize("300_posts_comments", "comments") %>% 
   extract_non_base() %>% 
   extract_plural()
@@ -262,11 +324,11 @@ tripadvisor_tokens <- tokenize("tripadvisor_turkishairlines6846.rds", "review") 
   extract_plural()
 ```
 
-``` {r saving, eval=FALSE}
+``` {r saving, eval=FALSE, message=FALSE, warning=FALSE}
 saveRDS(tokens_count, "tokens_count_300")
 saveRDS(tokens_count, "TA_tokens_count_6846")
 ```
-```{r readtokens}
+```{r readtokens, message=FALSE, warning=FALSE}
 facebook_tokens %>% 
   tibble::as_tibble()
 
@@ -274,9 +336,9 @@ tripadvisor_tokens %>%
   tibble::as_tibble()
 ```
 
-# Word Count
-
-``` {r wordcount}
+Word Count
+========================================================
+``` {r wordcount, message=FALSE, warning=FALSE}
 
 word_count <- function(data) {
   readRDS(data) %>% 
@@ -292,10 +354,9 @@ facebook_word_count
 tripadvisor_word_count
 ```
 
-
-# Word Count Plot
-
-```{r wordcountplot}
+Word Count Plot
+========================================================
+```{r wordcountplot, echo=TRUE, message=FALSE, warning=FALSE}
 
 word_count_plot <- function(data, min_count) {
   tokens_count <- readRDS(data)
@@ -312,20 +373,11 @@ word_count_plot <- function(data, min_count) {
 
 word_count_plot("tokens_count_300", 25)
 word_count_plot("TA_tokens_count_6846", 300)
-
 ```  
 
-``` {r manual_addition_lexicon, eval=FALSE}
-# Adding words manually to the lexicon
-sahban_base_lexicon <- readRDS("sahban_base_lexicon") %>% 
-  dplyr::bind_rows(data.frame(base = c("travel", "travel"), 
-                              non_base = c("travelled", "travelling")))
-saveRDS(sahban_base_lexicon, "sahban_base_lexicon")
-```
-
-# Indexed Response Function
-
-```{r numbered_response_tokens}
+Indexed Tokenization
+========================================================
+```{r numbered_response_tokens, echo=FALSE, message=FALSE, warning=FALSE}
 
 numbered_response_tokens <- function(file, response_type) {
   
@@ -342,24 +394,7 @@ numbered_response_tokens <- function(file, response_type) {
 }
 ```
 
-```{r non_base_verbs}
-# Convert non_base verbs into base verbs
-
-extract_non_base <- function(data) {
-  data %>%
-    dplyr::rename(non_base = word) %>%
-    dplyr::left_join(readRDS("sahban_base_lexicon"), by = "non_base") %>%
-    dplyr::mutate(base = ifelse(is.na(base), non_base, base)) %>%
-    dplyr::rename(word = base) %>%
-    dplyr::select(-one_of("non_base")) 
-}
-```
-
-# Indexed Tokenization
-
-The ```numbererd_response_function()``` is used to find out numbered tokenization.
-
-```{r numbererd_tokenization}
+```{r numbererd_tokenization, echo=FALSE, message=FALSE, warning=FALSE}
 tidy_response_facebook <- 
   numbered_response_tokens("300_posts_comments", "comments") %>% 
   dplyr::mutate(comment_number = row_number()) %>% 
@@ -390,21 +425,23 @@ tidy_response_tripadvisor %>%
   dplyr::arrange(response_number)
 ```
 
-# Sentence Tokenization
-
-```{r sentencetokens, eval=FALSE}
+Sentence Tokenization
+========================================================
+```{r sentencetokens1, eval=FALSE, message=FALSE, warning=FALSE}
 untidy_response_facebook <- 
   numbered_response_tokens("300_posts_comments", "comments") %>% 
   dplyr::mutate(comment_number = row_number()) %>% 
   dplyr::select(id, post_number, comment_number, comments, 
                 created_time, type, likes_count, comments_count, 
                 shares_count)
-
+```
+```{r sentencetokens2, eval=FALSE, message=FALSE, warning=FALSE}
 untidy_response_tripadvisor <- 
   numbered_response_tokens("tripadvisor_turkishairlines6846.rds", "review") %>% 
   dplyr::select(id, post_number, review, quote, rating, date)
 
-
+```
+```{r sentencetokens3, eval=FALSE, message=FALSE, warning=FALSE}
 sentence_tokens <- function(data = untidy_response_facebook, 
                             response_column = "comments", 
                             group_by = "comment_number") {
@@ -431,7 +468,8 @@ sentence_tokens <- function(data = untidy_response_facebook,
     dplyr::ungroup() %>% 
     tidytext::unnest_tokens(sentences, sentence, token = "sentences")
 }
-
+```
+```{r sentencetokens4, eval=FALSE, message=FALSE, warning=FALSE}
 facebook_sentence_tokens <- 
   sentence_tokens(data = untidy_response_facebook,
                   response_column = "comments",
@@ -441,7 +479,8 @@ tripadvisor_sentence_tokens <-
   sentence_tokens(data = untidy_response_tripadvisor,
                   response_column = "review",
                   group_by = "post_number")
-
+```
+```{r sentencetokens5, eval=FALSE, message=FALSE, warning=FALSE}
 facebook_sentence_tokens 
 
 tripadvisor_sentence_tokens
@@ -450,9 +489,10 @@ tripadvisor_sentence_tokens
   dplyr::select(sentences) 
 ```
 
-# Response sentiments
+Sentiment Analysis
+========================================================
 
-```{r response_sentiments}
+```{r response_sentiments, echo=TRUE, message=FALSE, warning=FALSE}
 
 response_sentiments <- function(data, lexicon, group_by = sentiment) {
   data %>% 
@@ -462,15 +502,18 @@ response_sentiments <- function(data, lexicon, group_by = sentiment) {
     dplyr::mutate(sentiment = positive - negative) %>% 
     dplyr::ungroup()
 }
-
+```
+```{r response_sentiments1, echo=TRUE, message=FALSE, warning=FALSE}
 # bing
 facebook_sentiments_bing <- response_sentiments(tidy_response_facebook, "bing")
 tripadvisor_sentiments_bing <- response_sentiments(tidy_response_tripadvisor, "bing")
-
+```
+```{r response_sentiments2, echo=TRUE, message=FALSE, warning=FALSE}
 # nrc
 facebook_sentiments_nrc <- response_sentiments(tidy_response_facebook, "nrc")
 tripadvisor_sentiments_nrc <- response_sentiments(tidy_response_tripadvisor, "nrc")
-
+```
+```{r response_sentiments3, echo=TRUE, message=FALSE, warning=FALSE}
 #afinn
 sentiments_afinn <- function(data) {
   data %>% 
@@ -479,10 +522,12 @@ sentiments_afinn <- function(data) {
     dplyr::group_by(id, response_number) %>% 
     dplyr::summarise(score = sum(score)) 
 }
-
+```
+```{r response_sentiments4, echo=TRUE, message=FALSE, warning=FALSE}
 facebook_sentiments_afinn <- sentiments_afinn(tidy_response_facebook)
 tripadvisor_sentiments_afinn <- sentiments_afinn(tidy_response_tripadvisor)
-
+```
+```{r response_sentiments5, echo=TRUE, message=FALSE, warning=FALSE}
 facebook_sentiments_bing %>% 
   dplyr::select(response_number, negative, positive, sentiment) 
 tripadvisor_sentiments_bing 
@@ -492,9 +537,9 @@ facebook_sentiments_afinn
 tripadvisor_sentiments_afinn
 ```
 
-# Sentiments to All Words Ratio
-
-```{r sentimentratio}
+Sentiments to All Words Ratio
+========================================================
+```{r sentimentratio, message=FALSE, warning=FALSE}
 sentiment_token_ratio <- function(data, sentiment_type = "negative") {
   
   negative_sentiment <- get_sentiments("bing") %>% 
@@ -513,7 +558,6 @@ sentiment_token_ratio <- function(data, sentiment_type = "negative") {
     dplyr::top_n(10) %>%
     dplyr::ungroup() %>% 
     dplyr::arrange(desc(ratio))
-  
 }
 
 facebook_negative_sentiment_ratio <- 
@@ -537,9 +581,10 @@ numbered_response_tokens(
   dplyr::select(review, id)
 ```
 
-# Most Frequent Sentiments
+Most Frequent Sentiments
+========================================================
 
-```{r frequentsentiments}
+```{r frequentsentiments, message=FALSE, warning=FALSE}
 frequent_sentiments <- function(data) {
   data %>% 
     dplyr::inner_join(tidytext::get_sentiments("bing")) %>% 
@@ -555,8 +600,9 @@ tripadvisor_frequent_sentiments
 
 ```
 
-# Plot Frequent Sentiments Counts
-```{r plotsentimentcount}
+Plot Frequent Sentiments Counts
+========================================================
+```{r plotsentimentcount, message=FALSE, warning=FALSE}
 
 plot_sentiment_count <- function(data) {
   data %>% 
@@ -576,9 +622,9 @@ plot_sentiment_count(facebook_frequent_sentiments)
 plot_sentiment_count(tripadvisor_frequent_sentiments)
 ```
 
-# Word Cloud
-
-```{r wordcloud}
+Word Cloud
+========================================================
+```{r wordcloud, message=FALSE, warning=FALSE}
 library(wordcloud)
 word_cloud <- function(data, max_words) {
   data %>%
@@ -591,9 +637,10 @@ word_cloud(tidy_response_facebook, max_words = 50)
 word_cloud(tidy_response_tripadvisor, max_words = 75)
 ```
 
-# Sentiment Cloud
+Sentiment Cloud
+========================================================
 
-```{r sentimentcloud}
+```{r sentimentcloud, message=FALSE, warning=FALSE}
 library(reshape2)
 
 sentiment_cloud <- function(dataset) {
@@ -609,3 +656,113 @@ sentiment_cloud(tidy_response_facebook)
 sentiment_cloud(tidy_response_tripadvisor)
 ```
 
+
+
+Data Wrangling
+========================================================
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+Tokenization
+========================================================
+
+- Word Tokenization
+- N-gram Tokenization
+- Sentence Tokenization
+
+Data Cleaning
+========================================================
+
+- Stop Words
+- Multiple Verb Forms
+- Plural Nouns
+
+Word Frequency
+========================================================
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+
+Sentiment Analysis
+========================================================
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+
+Sentiment Lexicons
+========================================================
+
+- AFINN
+- Opinion Lexicon
+- Emolex
+
+AFINN
+========================================================
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+
+Opinion Lexicon
+========================================================
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+Emolex
+========================================================
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+Most Frequent Sentiment
+========================================================
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+Sentiments to All Words Ratio
+========================================================
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+Word Cloud
+========================================================
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+Sentiment Cloud
+========================================================
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+
+Code
+========================================================
+
+```{r}
+summary(cars)
+```
+
+Slide With Plot
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
